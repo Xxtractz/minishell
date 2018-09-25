@@ -43,7 +43,7 @@ LIBFTOBJ = ../libft/ft_atoi.o ../libft/ft_bzero.o \
 			../libft/ft_strstr.o ../libft/ft_strsub.o \
 			../libft/ft_strtrim.o ../libft/ft_tolower.o \
 			../libft/ft_toupper.o ../libft/ft_put_wchar.o \
-			../libft/ft_putnbr_long.o
+			../libft/ft_putnbr_long.o ../libft/get_next_line.o
 
 SRC =	ft_printf.c ft_is_.c \
 		ft_format.c ft_init.c ft_parse_arg.c \
@@ -52,20 +52,21 @@ SRC =	ft_printf.c ft_is_.c \
 		ft_long.c ft_printf_p.c ft_printf_ld.c \
 		ft_printf_hex.c ft_printf_ud.c ft_printf_oct.c
 
-OBJ =	ft_printf.o ft_is_.o  \
-		ft_format.o ft_init.o ft_parse_arg.o \
-		ft_padding.o ft_parse_arg.o \
-		ft_printf_c.o ft_printf_s.o ft_printf_d_i.o \
-		ft_long.o ft_printf_p.o ft_printf_ld.o \
-		ft_printf_hex.o ft_printf_ud.o ft_printf_oct.o
+OBJ =	$(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
+$(NAME): $(OBJ)
+	@echo "\033[1;34mCreated -- $@ \033[0m"
+	@sleep 3
 	@make -C ../libft/ all
-	@$(CC) $(FLAGS) -c $(SRC)
 	@ar rc $(NAME) $(OBJ) $(LIBFTOBJ)
 	@ranlib $(NAME)
+	
+
+%.o: %.c
+	@echo "     \033[0;34mCompiling -- $@ \033[0m"
+	@$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	@make -C ../libft/ clean
@@ -80,4 +81,5 @@ re: fclean all
 norm :
 	@make -C ../libft/ norm
 	norminette $(SRC) 
-	norminette ft_printf.h
+
+.PHONY : all fclean re

@@ -12,20 +12,19 @@
 
 all:
 	@make -C ./printf/ all
-	@echo "\033[1;32m libft.a && libftprintf.a created"
 
 clean :
-	@make -C ./printf/ all
-	@echo "\033[1;31m objects deleted"
+	@make -C ./printf/ clean
+	@echo "\033[0;31m objects deleted\033[0m"
 
 fclean: clean
 	@make -C ./printf/ fclean
-	@echo "\033[1;31m objects and .a files deleted"
+	@echo "\033[1;31m objects and .a files deleted\033[0m"
 
 re: fclean all
 
 norm :
 	@make -C ./printf/ norm
-	@echo "\033[0;32mWill auto clear in 10 secs"
+	@echo "\033[0;32mWill auto clear in 10 secs\033[0m"
 	@sleep 10
 	clear

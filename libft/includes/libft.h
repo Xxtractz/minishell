@@ -12,7 +12,7 @@
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
+# define BUFF_SIZE 32
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -87,4 +87,5 @@ long	ft_abs_l(long num);
 void	ft_putnbr_long_neg(long n);
 void	ft_putnbr_long(long n);\
 void	ft_putnbr_long_long(unsigned long long n);
+int		get_next_line(const int fd, char **line);
 #endif

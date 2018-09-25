@@ -52,7 +52,6 @@ static void	do_env(char **env)
 		ft_printf("%s\n", env[i]);
 	 	i++;
 	}
-	free(env);
 }
 
 int		ft_last_path(char **str)

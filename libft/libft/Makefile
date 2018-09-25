@@ -26,28 +26,22 @@ SRCS = ft_atoi.c ft_bzero.c ft_isalnum.c \
 	   ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c \
 	   ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c \
 	   ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c \
-	   ft_put_wchar.c ft_putnbr_long.c
-OBJS = ft_atoi.o ft_bzero.o ft_isalnum.o \
-	   ft_isalpha.o ft_isascii.o ft_isdigit.o ft_isspace.o ft_isprint.o \
-	   ft_itoa.o ft_memalloc.o ft_memccpy.o ft_memchr.o \
-	   ft_memcmp.o ft_memcpy.o ft_memdel.o ft_memmove.o \
-	   ft_memset.o ft_putchar.o ft_putchar_fd.o ft_putendl.o \
-	   ft_putendl_fd.o ft_putnbr.o ft_putnbr_fd.o ft_putstr.o \
-	   ft_putstr_fd.o ft_strcat.o ft_strchr.o ft_strclr.o \
-	   ft_strcmp.o ft_strcpy.o ft_strdel.o ft_strdup.o ft_strequ.o \
-	   ft_striter.o ft_striteri.o ft_strjoin.o ft_strlcat.o \
-	   ft_length.o ft_strmap.o ft_strmapi.o ft_strncat.o \
-	   ft_strncmp.o ft_strncpy.o ft_strnequ.o ft_strnew.o \
-	   ft_strnstr.o ft_strrchr.o ft_strsplit.o ft_strstr.o \
-	   ft_strsub.o ft_strtrim.o ft_tolower.o ft_toupper.o \
-	   ft_put_wchar.o ft_putnbr_long.o		
+	   ft_put_wchar.c ft_putnbr_long.c get_next_line.c
+
+OBJS = $(SRCS:.c=.o)
+
 
 all: $(NAME)
 
-$(NAME) : 
-	@gcc $(CFLAGS) -c $(SRCS)
+$(NAME) : $(OBJS)
+	@echo "\033[1;32mCreated -- $@\033[0m"
 	@ar rc $(NAME) $(OBJS) 
 	@ranlib $(NAME)
+	@sleep 3
+
+%.o: %.c
+	@echo "     \033[0;32mCompiling -- $@ \033[0m"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS)
@@ -58,12 +52,9 @@ fclean : clean
 re : fclean all
 
 norm : 
-	norminette ft_i*
-	norminette ft_a*
-	norminette ft_l*
-	norminette ft_m*
-	norminette ft_p*
-	norminette ft_s*
-	norminette ft_t*
-	norminette *.h
-	
+	@norminette $(wordlist 1, 10, $(SRCS))
+	@norminette $(wordlist 11, 20, $(SRCS))
+	@sleep 5
+	@norminette $(wordlist 21, 30, $(SRCS))
+	@norminette $(wordlist 31, 40, $(SRCS))
+	@norminette $(wordlist 41, 50, $(SRCS))

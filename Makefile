@@ -26,7 +26,8 @@ all: $(NAME)
 
 $(NAME) : 
 	@make -C ./libft all
-	$(CC) minishell.c -o ft_ls $(FLAGS) $(LIB_A) 
+	$(CC) minishell.c -o minishell $(FLAGS) $(LIB_A) 
+	
 clean:
 	@make -C ./libft clean
 	@rm -rf $(OBJS)
@@ -40,6 +41,6 @@ re : fclean all
 
 norm :
 	@make -C ./libft norm
-	@echo "\033[0;32mWill auto clear in 10 secs"
+	@echo "\033[0;32mWill auto clear in 10 secs\033[0m"
 	@sleep 10
 	clear
