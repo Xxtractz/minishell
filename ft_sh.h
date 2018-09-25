@@ -18,9 +18,35 @@
 # include <sys/types.h>
 # include <signal.h>
 
+/*
+*   COLOR
+*/
+
 # define RED    "\033[0;31m"
 # define BLUE   "\033[0;34m"
 # define GREEN  "\033[0;32m"
 # define RESET  "\033[0m"
+
+/*
+*   Environment
+*/
+
+void	check_env_var(char *arg, char **env);
+void	do_env(char **env);
+
+/*
+*   minishell Builtin
+*/
+void 	do_echo(char **arg, char **env);
+void	do_exit(char **arg);
+
+
+/*
+*   Minishell Utils
+*/
+
+int		ft_last_path(char **str);
+void	ft_input(void);
+
 
 #endif

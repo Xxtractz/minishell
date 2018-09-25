@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	shlib.a
+NAME	=	minishell_lib.a
 
 CC		=	gcc
 
@@ -18,15 +18,25 @@ FLAGS	=	-Wall -Werror -Wextra
 
 LIB_A	=	./libft/printf/libftprintf.a
 
-SRCS	=	
+SRCS	=	ft_env.c ft_utils.c ft_echo.c\
+			ft_exit.c
 
-OBJS	=	
+OBJS = $(SRCS:.c=.o)
+
 
 all: $(NAME)
 
-$(NAME) : 
+$(NAME) : $(OBJS)
+	@echo "\033[1;33mCreated -- $@\033[0m"
+	@sleep 3
 	@make -C ./libft all
-	$(CC) minishell.c -o minishell $(FLAGS) $(LIB_A) 
+	@ar rc $(NAME) $(OBJS) 
+	@ranlib $(NAME)
+	@$(CC) minishell.c -o minishell $(FLAGS) $(LIB_A) $(NAME)
+
+%.o: %.c
+	@echo "     \033[0;33mCompiling -- $@ \033[0m"
+	@$(CC) $(FLAGS) -c $< -o $@
 	
 clean:
 	@make -C ./libft clean
@@ -36,6 +46,7 @@ fclean : clean
 	@make -C ./libft fclean
 	@rm -rf ft_ls
 	@/bin/rm -rf $(NAME)
+	@/bin/rm -rf minishell
 
 re : fclean all
 
