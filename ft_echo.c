@@ -27,12 +27,12 @@ void 	do_echo(char **arg, char **env)
 	{
 		while (arg[k][i] != '\0')
 		{
-			if (arg[k][i] == '$')
+			if (IS_VAR(arg[k][i]))
 			{
 				check_env_var(arg[k], env);
 				break;
 			}
-			if(arg[k][i] == '\"' || arg[k][i] == '\'')
+			if(IS_QOUTE(arg[k][i]))
 				i++;
 			if(arg[k][i] == '\0')
 				break;

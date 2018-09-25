@@ -18,6 +18,14 @@
 # include <sys/types.h>
 # include <signal.h>
 
+
+/*
+*  IS_Variables
+*/
+
+# define IS_VAR(a) (a == '$')
+# define IS_QOUTE(a) (a == '\'' || a == '\"')
+
 /*
 *   COLOR
 */
@@ -39,6 +47,7 @@ void	do_env(char **env);
 */
 void 	do_echo(char **arg, char **env);
 void	do_exit(char **arg);
+void	do_cd(char **arg, char **env);
 
 
 /*
