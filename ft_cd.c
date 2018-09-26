@@ -12,8 +12,33 @@
 
 #include "ft_sh.h"
 
-void	do_exit(char **arg)
+static void	ft_home(char **env)
 {
-	free(arg);
-	exit(0);	
+	char 	**home;
+	int		i;
+
+	i = 0;
+	while(env[i] != '\0')
+	{
+		home = ft_strsplit(env[i], '=');
+		if (ft_strcmp(home[0], "HOME") == 0)
+			chdir(home[1]);
+		i++;
+	}
+}
+
+void	do_cd(char **arg, char **env)
+{
+	// char 	*cwd;
+	// char	*old;
+	// struct stat s_st;
+
+	if ((ft_strcmp(arg[1], "~") == 0) || 
+		(ft_strcmp(arg[1], "--") == 0) || (ft_strcmp(arg[1], "$HOME" ) == 0))
+		ft_home(env);
+	// else if (lstat(arg[1] ,&s_st) >= 0)
+	// 	chdir(arg[1]);
+	else 
+		ft_printf("cd: no such file or directory: %s\n", arg[1]);
+
 }

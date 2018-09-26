@@ -17,6 +17,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <sys/stat.h>
 
 
 /*
@@ -47,6 +48,7 @@ void	do_env(char **env);
 */
 void 	do_echo(char **arg, char **env);
 void	do_exit(char **arg);
+void	do_cd(char **arg, char **env);
 void	do_cd(char **arg, char **env);
 
 

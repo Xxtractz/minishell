@@ -43,8 +43,8 @@ int	main(int ac, char **av, char **envp)
 			}
 			else if (ft_strcmp(arg[i], "echo") == 0)
 				do_echo(arg, env);
-			// else if (ft_strcmp(arg[i], "cd"))
-			//  	do_cd(arg, env);
+			else if (ft_strcmp(arg[i], "cd") == 0)
+			 	do_cd(arg, env);
 			// else if (ft_strcmp(arg[i], "setenv"))
 			// 	do_setenv(arg, env);
 			// else if (ft_strcmp(arg[i], "unsetenv"))
