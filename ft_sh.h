@@ -55,8 +55,8 @@ void	do_cd(char **arg, char **env);
 /*
 *   Minishell Utils
 */
-
-int		ft_last_path(char **str);
+int		ft_strlen_double(char **str);
+char	**ft_strcpy_double(char **arr);
 void	ft_input(void);
 
 

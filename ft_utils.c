@@ -12,7 +12,7 @@
 
 #include "ft_sh.h"
 
-int		ft_last_path(char **str)
+int		ft_strlen_double(char **str)
 {
 	int i;
 
@@ -39,4 +39,24 @@ void	ft_input(void)
 		pathreal[last - 1], RESET, RED, RESET);
 	free(path);
 	free(pathreal);
+}
+
+char	**ft_strcpy_double(char **arr)
+{
+	int		k;
+	int		i;
+	char	**big;
+
+	k = ft_strlen_double(arr);
+	i = 0;
+	if (!(big = (char **)malloc(sizeof(char *) * (k + 1))))
+		return (NULL);
+	big[k + 1] = NULL;
+	while (i != k)
+	{
+		big[i] = ft_strnew(ft_strlen(arr[i]));
+		ft_strcpy(big[i], arr[i]);
+		i++;
+	}
+	return (big);
 }
