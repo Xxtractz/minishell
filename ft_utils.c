@@ -34,7 +34,7 @@ void	ft_input(void)
 	path = NULL;
 	path = getcwd(path, sizeof(path));
 	pathreal = ft_strsplit(path, '/');
-	last = ft_last_path(pathreal);
+	last = ft_strlen_double(pathreal);
 	ft_printf("%s[ %s ]%s%s[$➜] %s", GREEN, 
 		pathreal[last - 1], RESET, RED, RESET);
 	free(path);
