@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 
 	i = 0;
 	j = 0;
-	env = envp;
+	env = ft_strcpy_double(envp);
 	path = NULL;
 	(void)(ac && av);
 	while (1)
@@ -45,8 +45,8 @@ int	main(int ac, char **av, char **envp)
 				do_echo(arg, env);
 			else if (ft_strcmp(arg[i], "cd") == 0)
 			 	do_cd(arg, env);
-			// else if (ft_strcmp(arg[i], "setenv"))
-			// 	do_setenv(arg, env);
+			else if (ft_strcmp(arg[i], "setenv") == 0)
+				do_setenv(arg, env);
 			// else if (ft_strcmp(arg[i], "unsetenv"))
 			// 	do_unsetenv(arg, env);
 			else if (ft_strcmp(arg[i], "env") == 0)

@@ -19,7 +19,7 @@ FLAGS	=	-Wall -Werror -Wextra
 LIB_A	=	./libft/printf/libftprintf.a
 
 SRCS	=	ft_env.c ft_utils.c ft_echo.c\
-			ft_exit.c ft_cd.c
+			ft_exit.c ft_cd.c ft_setenv.c
 
 OBJS = $(SRCS:.c=.o)
 

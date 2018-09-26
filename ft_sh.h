@@ -49,7 +49,7 @@ void	do_env(char **env);
 void 	do_echo(char **arg, char **env);
 void	do_exit(char **arg);
 void	do_cd(char **arg, char **env);
-void	do_cd(char **arg, char **env);
+void	do_setenv(char **arg, char **env);
 
 
 /*
