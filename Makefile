@@ -28,7 +28,6 @@ all: $(NAME)
 
 $(NAME) : $(OBJS)
 	@echo "\033[1;33mCreated -- $@\033[0m"
-	@sleep 3
 	@make -C ./libft all
 	@ar rc $(NAME) $(OBJS) 
 	@ranlib $(NAME)

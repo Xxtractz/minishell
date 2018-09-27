@@ -12,70 +12,81 @@
 
 #include "ft_sh.h"
 
-static int		ft_env_position(char *arg, char **env)
-{
-	int		i;
-	char	**temp;
-
-	i = 0;
-	while (env[i])
-	{
-		temp = ft_strsplit(env[i], '=');
-		if (ft_strcmp(arg, temp[i]) == 0)
-		{
-			free(temp);
-			return (i);
-		}
-		free(temp);
-		i++;
-	}
-	return (i);
-}
-
-static char		**ft_new_env(int new_size, char **env)
+static char		**set_new_env(char **env, char **arg, int num_arg)
 {
 	char	**new;
 	int		i;
+	int		count;
+	char	*arg_join;
 
-	new = (char **)ft_memalloc(sizeof(char *) * (new_size));
 	i = 0;
-	while (env[i] && i < new_size)
+	count = ft_strlen_double(env);
+	new = (char **)malloc(sizeof(char *) * count + 2);
+	while (i != count)
 	{
-		new[i] = ft_strdup(env[i]);
-		free(env[i]);
+		new[i] = env[i];
 		i++;
 	}
+	arg_join = ft_strcat(arg[1], "=");
+	if (num_arg == 3)
+		arg_join = ft_strcat(arg_join, arg[2]);
+	new[i] = ft_strnew(ft_strlen(arg_join));
+	new[i] = ft_strdup(arg_join);
+	new[i + 1] = NULL;
 	free(env);
 	return (new);
 }
 
-static void		set_env(char *env_var, char *env_value, char **env)
+void	do_setenv(char **arg, char ***env)
 {
-	int		position;
-	char	*temp;
+	char	**env_var;
+	int		env_count;
+	int		count;
+	int		i;
 
-	position = ft_env_position(env_var, env);
-	temp = ft_strjoin("=", env_value);
-	if (env[position])
+	i = 0;
+	count = 0;
+	env_count = 0;
+	while (arg[count] != NULL)
+		count++;
+	while ((*env)[env_count] != NULL)
+		env_count++;
+	if (count == 1)
 	{
-		free(env[position]);
-		if (env_value)
-			env[position] = ft_strjoin(env_var, temp);
-		else
-			env[position] = ft_strjoin(env_var, "=");
+		do_env(*env);
+		return ;
 	}
-	else
+	if (count > 3)
 	{
-		env = ft_new_env(position + 2, env);
-		if (env_value)
-			env[position] = ft_strjoin(env_var, temp);
-		else
-			env[position] = ft_strjoin(env_var, "=");
+		ft_printf("setenv: too many arguements\n");
 	}
-	free(temp);
-}
-
-void	do_setenv(char **arg, char **env)
-{
-	set_env(arg[1], arg[2], env);
+	if (count > 1 && count < 4)
+	{
+		while ((*env)[i] != NULL)
+		{
+			env_var = ft_strsplit((*env)[i], '=');
+			if (ft_strcmp(arg[1], env_var[0]) == 0)
+			{
+				ft_strcat(env_var[0], "=");
+				if (count == 3)
+				{
+					env_var[1] = NULL;
+					env_var[1] = ft_strnew(ft_strlen(arg[2]));	
+					ft_strcpy(env_var[1], arg[2]);
+					(*env)[i] = ft_strcat(env_var[0], env_var[1]);
+					break ;
+				}
+				(*env)[i] = env_var[0];
+				break ;
+			}
+			free(env_var);
+			env_var = NULL;
+			i++;
+		}
+		if (i == env_count)
+		{
+			*env = set_new_env(*env, arg, count);
+			return ;
+		}
+	}
 }

@@ -37,7 +37,6 @@ $(NAME) : $(OBJS)
 	@echo "\033[1;32mCreated -- $@\033[0m"
 	@ar rc $(NAME) $(OBJS) 
 	@ranlib $(NAME)
-	@sleep 3
 
 %.o: %.c
 	@echo "     \033[0;32mCompiling -- $@ \033[0m"

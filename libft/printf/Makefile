@@ -58,7 +58,6 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "\033[1;34mCreated -- $@ \033[0m"
-	@sleep 3
 	@make -C ../libft/ all
 	@ar rc $(NAME) $(OBJ) $(LIBFTOBJ)
 	@ranlib $(NAME)

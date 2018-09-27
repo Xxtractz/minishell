@@ -32,11 +32,19 @@ void	ft_input(void)
 	int		last;
 
 	path = NULL;
+	last = 0;
+	pathreal = NULL;
 	path = getcwd(path, sizeof(path));
-	pathreal = ft_strsplit(path, '/');
-	last = ft_strlen_double(pathreal);
-	ft_printf("%s[ %s ]%s%s[$➜] %s", GREEN, 
+	if (ft_strcmp(path, "/") == 0)
+		 ft_printf("%s[ %s ]%s%s[$➜] %s", GREEN, 
+		path, RESET, RED, RESET);
+	else
+	{
+		pathreal = ft_strsplit(path, '/');
+		last = ft_strlen_double(pathreal);
+		ft_printf("%s[ %s ]%s%s[$➜] %s", GREEN, 
 		pathreal[last - 1], RESET, RED, RESET);
+	}
 	free(path);
 	free(pathreal);
 }
