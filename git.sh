@@ -1,5 +1,5 @@
-#/bash/bin
+#!/bin/sh
 
 git add *
-git commit -m "init"
+git commit -m "$1"
 git push
