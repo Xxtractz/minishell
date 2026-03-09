@@ -14,15 +14,16 @@
 
 void	check_env_var(char *arg, char **env)
 {
-	int		i;
 	char	**env_var;
+	int		i;
 
 	i = 0;
-	while(env[i] != '\0')
+	while (env[i] != NULL)
 	{
 		env_var = ft_strsplit(env[i], '=');
 		if (ft_strcmp(env_var[0], arg + 1) == 0)
 			ft_printf("%s", env_var[1]);
+		ft_free_double(env_var);
 		i++;
 	}
 }
@@ -32,9 +33,9 @@ void	do_env(char **env)
 	int		i;
 
 	i = 0;
-	while (env[i] != '\0')
+	while (env[i] != NULL)
 	{
 		ft_printf("%s\n", env[i]);
-	 	i++;
+		i++;
 	}
 }

@@ -46,9 +46,9 @@ void	do_env(char **env);
 /*
 *   minishell Builtin
 */
-void 	do_echo(char **arg, char **env);
+void	do_echo(char **arg, char **env);
 void	do_exit(char **arg);
-void	do_cd(char **arg, char **env);
+void	do_cd(char **arg, char ***env);
 void	do_setenv(char **arg, char ***env);
 
 
@@ -57,6 +57,7 @@ void	do_setenv(char **arg, char ***env);
 */
 int		ft_strlen_double(char **str);
 char	**ft_strcpy_double(char **arr);
+void	ft_free_double(char **arr);
 void	ft_input(void);
 
 

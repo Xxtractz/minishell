@@ -14,6 +14,6 @@
 
 void	do_exit(char **arg)
 {
-	free(arg);
-	exit(0);	
+	ft_free_double(arg);
+	exit(0);
 }

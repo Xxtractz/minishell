@@ -12,25 +12,25 @@
 
 #include "ft_sh.h"
 
-static void print_echo(char **arg, char **env, int i, int k)
+static void	print_echo(char **arg, char **env, int i, int k)
 {
 	while (arg[k][i] != '\0')
 	{
 		if (IS_VAR(arg[k][i]))
 		{
 			check_env_var(arg[k], env);
-			break;
+			break ;
 		}
-		if(IS_QOUTE(arg[k][i]))
+		if (IS_QOUTE(arg[k][i]))
 			i++;
-		if(arg[k][i] == '\0')
-			break;
+		if (arg[k][i] == '\0')
+			break ;
 		ft_putchar(arg[k][i]);
 		i++;
 	}
 }
 
-void 	do_echo(char **arg, char **env)
+void	do_echo(char **arg, char **env)
 {
 	int		i;
 	int		k;
@@ -39,9 +39,9 @@ void 	do_echo(char **arg, char **env)
 	i = 0;
 	k = 1;
 	count = 0;
-	while (arg[count] != '\0')
+	while (arg[count] != NULL)
 		count++;
-	while (arg[k] != '\0')
+	while (arg[k] != NULL)
 	{
 		print_echo(arg, env, i, k);
 		i = 0;

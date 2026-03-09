@@ -14,15 +14,27 @@
 
 int		ft_strlen_double(char **str)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (str[i])
+		i++;
+	return (i);
+}
+
+void	ft_free_double(char **arr)
+{
+	int		i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
 	{
+		free(arr[i]);
 		i++;
 	}
-	return(i);
-	free(str);
+	free(arr);
 }
 
 void	ft_input(void)
@@ -31,39 +43,37 @@ void	ft_input(void)
 	char	**pathreal;
 	int		last;
 
-	path = NULL;
 	last = 0;
 	pathreal = NULL;
-	path = getcwd(path, sizeof(path));
+	path = getcwd(NULL, 0);
 	if (ft_strcmp(path, "/") == 0)
-		 ft_printf("%s[ %s ]%s%s[$➜] %s", GREEN, 
-		path, RESET, RED, RESET);
+		ft_printf("%s[ %s ]%s%s[$\xe2\x9e\x9c] %s", GREEN,
+			path, RESET, RED, RESET);
 	else
 	{
 		pathreal = ft_strsplit(path, '/');
 		last = ft_strlen_double(pathreal);
-		ft_printf("%s[ %s ]%s%s[$➜] %s", GREEN, 
-		pathreal[last - 1], RESET, RED, RESET);
+		ft_printf("%s[ %s ]%s%s[$\xe2\x9e\x9c] %s", GREEN,
+			pathreal[last - 1], RESET, RED, RESET);
+		ft_free_double(pathreal);
 	}
 	free(path);
-	free(pathreal);
 }
 
 char	**ft_strcpy_double(char **arr)
 {
+	char	**big;
 	int		k;
 	int		i;
-	char	**big;
 
 	k = ft_strlen_double(arr);
 	i = 0;
 	if (!(big = (char **)malloc(sizeof(char *) * (k + 1))))
 		return (NULL);
-	big[k + 1] = NULL;
+	big[k] = NULL;
 	while (i != k)
 	{
-		big[i] = ft_strnew(ft_strlen(arr[i]));
-		ft_strcpy(big[i], arr[i]);
+		big[i] = ft_strdup(arr[i]);
 		i++;
 	}
 	return (big);

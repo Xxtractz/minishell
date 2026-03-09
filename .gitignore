@@ -1,0 +1,10 @@
+# Binary
+minishell
+
+# Compiled objects and archives
+*.o
+*.a
+
+# macOS
+.DS_Store
+.idea

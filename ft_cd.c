@@ -12,92 +12,90 @@
 
 #include "ft_sh.h"
 
-static char *ft_home(char **env)
+static char	*ft_home(char **env)
 {
-	char 	**home;
+	char	**split;
+	char	*result;
 	int		i;
 
 	i = 0;
-	while(env[i] != NULL)
+	while (env[i] != NULL)
 	{
-		home = ft_strsplit(env[i], '=');
-		if (ft_strcmp(home[0], "HOME") == 0)
-			return(home[1]);
+		split = ft_strsplit(env[i], '=');
+		if (ft_strcmp(split[0], "HOME") == 0)
+		{
+			result = ft_strdup(split[1]);
+			ft_free_double(split);
+			return (result);
+		}
+		ft_free_double(split);
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
-static char *ft_oldpwd(char **env)
+static char	*ft_oldpwd(char **env)
 {
-	char 	**home;
+	char	**split;
+	char	*result;
 	int		i;
 
 	i = 0;
-	while(env[i] != NULL)
+	while (env[i] != NULL)
 	{
-		home = ft_strsplit(env[i], '=');
-		if (ft_strcmp(home[0], "OLDPWD") == 0)
-			return(home[1]);
+		split = ft_strsplit(env[i], '=');
+		if (ft_strcmp(split[0], "OLDPWD") == 0)
+		{
+			result = ft_strdup(split[1]);
+			ft_free_double(split);
+			return (result);
+		}
+		ft_free_double(split);
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
-int			ft_is_dir(char *dir)
+static int	ft_is_dir(char *dir)
 {
 	struct stat		s_is;
 
 	if (lstat(dir, &s_is) < 0)
 	{
 		ft_printf("cd: no such file or directory: %s\n", dir);
+		return (0);
 	}
-	return (s_is.st_mode & S_IFDIR) ? 1 : 0;
+	return ((s_is.st_mode & S_IFDIR) ? 1 : 0);
 }
 
-
-void	do_cd(char **arg, char **env)
+static void	ft_update_dir_var(char ***env, char *key)
 {
-	char 	**cwd;
-	char	**old;
-	char	*path;
-	char	*new_dir;
-	char	*home;
-	char	*oldpwd;
+	char	*args[3];
+	char	*cwd = getcwd(NULL, 0);
+	args[0]	= "setenv";
+	args[1] = key;
+	args[2] = cwd;
+	do_setenv((char **)args, env);
+	free(cwd);
+}
 
-	cwd = (char **)malloc(sizeof(char *) * 3);
-	old = (char **)malloc(sizeof(char *) * 3);
-	new_dir = NULL;
-	path = NULL;;
-	home = NULL;
-	oldpwd = NULL;
-	old[0] = ft_strdup("setenv");
-	old[1] = ft_strdup("OLDPWD");
-	new_dir = getcwd(path, sizeof(new_dir));
-	old[2] = ft_strdup(new_dir);
-	home = ft_home(env);
-	oldpwd = ft_oldpwd(env);
-	
-	new_dir = NULL;
-	path = NULL;
-	cwd[0] = ft_strdup("setenv");
-	cwd[1] = ft_strdup("PWD");
-
-	if (!arg[1] || (ft_strcmp(arg[1], "~") == 0) || 
-		(ft_strcmp(arg[1], "--") == 0) || 
-		(ft_strcmp(arg[1], "$HOME" ) == 0))
+void	do_cd(char **arg, char ***env)
+{
+	char	*home = ft_home(*env);
+	char	*oldpwd = ft_oldpwd(*env);
+	ft_update_dir_var(env, "OLDPWD");
+	if (!arg[1] || (ft_strcmp(arg[1], "~") == 0) ||
+		(ft_strcmp(arg[1], "--") == 0) ||
+		(ft_strcmp(arg[1], "$HOME") == 0))
 		chdir(home);
-	else if ((ft_strcmp(arg[1], "-") == 0) || 
-		(ft_strcmp(arg[1], "$OLDPWDcd " ) == 0))
+	else if ((ft_strcmp(arg[1], "-") == 0) ||
+		(ft_strcmp(arg[1], "$OLDPWD") == 0))
 		chdir(oldpwd);
 	else if (ft_is_dir(arg[1]))
 		chdir(arg[1]);
 	else
 		ft_printf("cd: no such file or directory: %s\n", arg[1]);
-	do_setenv(old, &env);	
-	new_dir = getcwd(path, sizeof(new_dir));
-	cwd[2] = ft_strdup(new_dir);
-	do_setenv(cwd, &env);
-	free(new_dir);
-	free(path);
+	free(home);
+	free(oldpwd);
+	ft_update_dir_var(env, "PWD");
 }
